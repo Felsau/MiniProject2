@@ -1,0 +1,23 @@
+// src/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  // ใส่บรรทัดนี้กลับมา และชี้ไปที่ไฟล์ Database เดิมของคุณ
+  url      = "file:./Database.db"
+}
+
+model Jobs {
+  id          Int      @id @default(autoincrement())
+  title       String?
+  salary      String?
+  description String?
+  location    String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("Jobs")
+}

@@ -4,8 +4,12 @@ type Props = {
   isOpen: boolean;
   jobTitle: string;
   salary: string;
-  onChangeTitle: (value: string) => void;
-  onChangeSalary: (value: string) => void;
+  description: string;
+  location: string;
+  onChangeTitle: (v: string) => void;
+  onChangeSalary: (v: string) => void;
+  onChangeDescription: (v: string) => void;
+  onChangeLocation: (v: string) => void;
   onClose: () => void;
   onSubmit: () => void;
 };
@@ -14,8 +18,12 @@ export default function CreateJobModal({
   isOpen,
   jobTitle,
   salary,
+  description,
+  location,
   onChangeTitle,
   onChangeSalary,
+  onChangeDescription,
+  onChangeLocation,
   onClose,
   onSubmit,
 }: Props) {
@@ -24,52 +32,51 @@ export default function CreateJobModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="w-[360px] rounded-xl bg-white p-6 shadow-lg dark:bg-zinc-900">
-        <h2 className="mb-4 text-xl font-bold text-zinc-900 dark:text-white">
-          เพิ่มตำแหน่งงาน
-        </h2>
+        <h2 className="mb-4 text-xl font-bold">เพิ่มตำแหน่งงาน</h2>
 
-        {/* ชื่อตำแหน่งงาน */}
-        <label className="mb-1 block text-sm text-zinc-600 dark:text-zinc-300">
-          ชื่อตำแหน่งงาน
-        </label>
+        {/* ชื่อตำแหน่ง */}
+        <label className="text-sm">ชื่อตำแหน่งงาน</label>
         <input
-          type="text"
-          placeholder="เช่น Frontend Developer"
           value={jobTitle}
           onChange={(e) => onChangeTitle(e.target.value)}
-          className="mb-4 w-full rounded border px-3 py-2 text-sm
-                     focus:outline-none focus:ring focus:ring-blue-300
-                     dark:bg-zinc-800 dark:text-white"
+          className="mb-3 w-full rounded border px-3 py-2"
         />
 
         {/* เงินเดือน */}
-        <label className="mb-1 block text-sm text-zinc-600 dark:text-zinc-300">
-          เงินเดือน
-        </label>
+        <label className="text-sm">เงินเดือน</label>
         <input
-          type="text"
-          placeholder="30,000 - 50,000 บาท"
           value={salary}
           onChange={(e) => onChangeSalary(e.target.value)}
-          className="mb-6 w-full rounded border px-3 py-2 text-sm
-                     focus:outline-none focus:ring focus:ring-blue-300
-                     dark:bg-zinc-800 dark:text-white"
+          className="mb-3 w-full rounded border px-3 py-2"
+        />
+
+        {/* รายละเอียด */}
+        <label className="text-sm">รายละเอียด</label>
+        <textarea
+          value={description}
+          onChange={(e) => onChangeDescription(e.target.value)}
+          className="mb-3 w-full rounded border px-3 py-2"
+        />
+
+        {/* สถานที่ */}
+        <label className="text-sm">สถานที่</label>
+        <input
+          value={location}
+          onChange={(e) => onChangeLocation(e.target.value)}
+          className="mb-4 w-full rounded border px-3 py-2"
         />
 
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="rounded px-4 py-2 text-sm
-                       text-zinc-600 hover:bg-zinc-100
-                       dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="px-4 py-2 text-sm rounded bg-gray-200"
           >
             ยกเลิก
           </button>
 
           <button
             onClick={onSubmit}
-            className="rounded bg-blue-600 px-4 py-2
-                       text-sm text-white hover:bg-blue-500"
+            className="px-4 py-2 text-sm rounded bg-blue-600 text-white"
           >
             บันทึก
           </button>
