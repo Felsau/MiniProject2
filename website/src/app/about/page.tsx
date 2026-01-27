@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamicImport from "next/dynamic";
 import JobGrid from "@/components/jobs/JobGrid";
 import CreateJobModal from "@/components/jobs/CreateJobModal";
 import { getJobsAction, createJobAction, getDepartmentsAction } from "@/actions/jobActions";
@@ -90,14 +91,16 @@ export default function Page() {
 
   return (
     <div className="min-h-screen p-10" style={{ backgroundColor: '#F8FAFC' }}>
-      <h1 className="mb-4 text-3xl font-bold" style={{ color: '#0F172A' }}>ระบบรับสมัครงาน</h1>
+      <h1 className="mb-4 text-3xl font-bold" style={{ color: '#0F172A' }}>
+        <TranslatableContent content="ระบบรับสมัครงาน" />
+      </h1>
 
       <button
         onClick={() => setIsModalOpen(true)}
         className="mb-6 rounded px-5 py-2 font-semibold text-white hover:opacity-90"
         style={{ backgroundColor: '#2563EB' }}
       >
-        + เพิ่มตำแหน่งงาน
+        <TranslatableContent content="+ เพิ่มตำแหน่งงาน" />
       </button>
 
       <JobGrid jobs={jobs} />

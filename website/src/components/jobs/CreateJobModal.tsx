@@ -88,10 +88,11 @@ export default function CreateJobModal({
     </div>
   );
 
-  const TextareaField = ({ label, value, onChange, rows = 2 }: any) => (
+  const TextareaField = ({ label, value, onChange, rows = 2, placeholder = "" }: any) => (
     <div className="col-span-full">
       <label className="mb-1 block font-semibold text-xs" style={{ color: '#1E293B' }}>{label}</label>
       <textarea
+        placeholder={placeholder}
         rows={rows}
         className="w-full rounded border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 transition"
         style={{ borderColor: '#E2E8F0', color: '#0F172A' }}
@@ -110,7 +111,7 @@ export default function CreateJobModal({
 
         {/* SECTION 1: Basic Info */}
         <h3 className="mb-3 mt-4 text-xs font-semibold uppercase" style={{ color: '#38BDF8' }}>ข้อมูลพื้นฐาน</h3>
-        <InputField label="ชื่อตำแหน่ง" value={jobTitle} onChange={onChangeTitle} />
+        <InputField label="ชื่อตำแหน่ง" value={jobTitle} onChange={onChangeTitle} placeholder="เช่น IT Support Officer, Marketing Manager" />
         
         <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
           <div>
@@ -135,11 +136,11 @@ export default function CreateJobModal({
               )}
             </select>
           </div>
-          <InputField label="ระดับงาน" value={jobLevel} onChange={onChangeLevel} />
+          <InputField label="ระดับงาน" value={jobLevel} onChange={onChangeLevel} placeholder="เช่น Officer, Senior, Manager" />
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <InputField label="สถานที่ทำงาน" value={location} onChange={onChangeLocation} />
+          <InputField label="สถานที่ทำงาน" value={location} onChange={onChangeLocation} placeholder="เช่น สำนักงานใหญ่ (อาคาร A), On-site 100%" />
           <div>
             <label className="mb-1 block font-semibold text-xs" style={{ color: '#1E293B' }}>ประเภทการจ้างงาน</label>
             <select
@@ -162,13 +163,13 @@ export default function CreateJobModal({
         {/* SECTION 2: Employment & Salary */}
         <h3 className="mb-3 mt-5 text-xs font-semibold uppercase" style={{ color: '#38BDF8' }}>สัญญาและค่าตอบแทน</h3>
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <InputField label="จำนวนรับ" value={hiringCount} onChange={onChangeHiringCount} type="number" />
+          <InputField label="จำนวนรับ" value={hiringCount} onChange={onChangeHiringCount} type="number" placeholder="เช่น 3" />
           <div>
             <label className="mb-1 block font-semibold text-xs" style={{ color: '#1E293B' }}>เงินเดือนต่ำสุด</label>
             <div className="flex items-center gap-1.5">
               <input
                 type="number"
-                placeholder="0"
+                placeholder="20000"
                 className="w-[70%] rounded border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 transition"
                 style={{ borderColor: '#E2E8F0', color: '#0F172A' }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = '#2563EB', e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)')}
@@ -184,7 +185,7 @@ export default function CreateJobModal({
             <div className="flex items-center gap-1.5">
               <input
                 type="number"
-                placeholder="0"
+                placeholder="35000"
                 className="w-[70%] rounded border px-3 py-1.5 text-sm focus:outline-none focus:ring-2 transition"
                 style={{ borderColor: '#E2E8F0', color: '#0F172A' }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = '#2563EB', e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)')}
@@ -199,18 +200,18 @@ export default function CreateJobModal({
 
         {/* SECTION 3: Job Details */}
         <h3 className="mb-3 mt-5 text-xs font-semibold uppercase" style={{ color: '#38BDF8' }}>รายละเอียดงาน</h3>
-        <TextareaField label="คำอธิบายงาน" value={description} onChange={onChangeDescription} rows={5} />
+        <TextareaField label="คำอธิบายงาน" value={description} onChange={onChangeDescription} rows={5} placeholder="อธิบายบทบาทสำคัญและวิสัยทัศน์ของตำแหน่งนี้" />
         <div className="mt-3 mb-4">
-          <TextareaField label="หน้าที่ความรับผิดชอบ" value={responsibilities} onChange={onChangeResponsibilities} rows={5} />
+          <TextareaField label="หน้าที่ความรับผิดชอบ" value={responsibilities} onChange={onChangeResponsibilities} rows={5} placeholder="รับแจ้งและแก้ไขปัญหา" />
         </div>
         <div className="mt-3 mb-4">
-          <TextareaField label="คุณสมบัติผู้สมัคร" value={qualifications} onChange={onChangeQualifications} rows={5} />
+          <TextareaField label="คุณสมบัติผู้สมัคร" value={qualifications} onChange={onChangeQualifications} rows={5} placeholder="วุฒิการศึกษา: ปริญญาตรี" />
         </div>
 
         {/* SECTION 4: Management */}
         <h3 className="mb-3 mt-5 text-xs font-semibold uppercase" style={{ color: '#38BDF8' }}>การจัดการ</h3>
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <TextareaField label="เงื่อนไขพิเศษ/พนักงานภายใน" value={specialConditions} onChange={onChangeSpecialConditions} rows={1} />
+          <TextareaField label="เงื่อนไขพิเศษ/พนักงานภายใน" value={specialConditions} onChange={onChangeSpecialConditions} rows={1} placeholder="เป็นพนักงานประจำ (Passed Probation)..." />
           <InputField label="วันปิดรับสมัคร" value={closeDate} onChange={onChangeCloseDate} type="date" />
         </div>
 

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import TranslatableContent from "@/components/TranslatableContent";
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
         </h1>
 
         <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
-          นี่คือหน้าหลักอย่างง่าย เริ่มแก้ไขได้ที่ <code>page.tsx</code>
+          <code>
+            <TranslatableContent content="นี่คือหน้าหลักอย่างง่าย เริ่มแก้ไขได้ที่ page.tsx" />
+          </code>
         </p>
 
         <div className="mt-8">
@@ -18,7 +21,7 @@ export default function Home() {
             href="/about"
             className="inline-block rounded-full bg-black px-6 py-3 text-white transition hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
           >
-            ไปหน้า About
+            <TranslatableContent content="ไปหน้า About" />
           </Link>
         </div>
       </main>
