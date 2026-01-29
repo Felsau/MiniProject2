@@ -44,7 +44,7 @@ export default function RootLayout({
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 bg-gradient-to-br from-slate-100 to-slate-200 p-8 overflow-y-auto">
+          <main className="flex-1 bg-linear-to-br from-slate-100 to-slate-200 p-8 overflow-y-auto">
             {children}
           </main>
 
