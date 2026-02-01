@@ -13,9 +13,9 @@ export default function LayoutWrapper({ children }: { children: ReactNode }) {
     return <>{children}</>;
   }
 
-  // ตรวจสอบว่ามี session และ role เป็น HR หรือ ADMIN หรือไม่
+  // ตรวจสอบว่ามี session และมี role ที่ถูกต้อง
   const userRole = (session?.user as any)?.role;
-  const showSidebar = status !== "loading" && session && (userRole === "HR" || userRole === "ADMIN");
+  const showSidebar = status !== "loading" && session && (userRole === "HR" || userRole === "ADMIN" || userRole === "USER");
 
   return (
     <main className={showSidebar ? "ml-72 min-h-screen" : "min-h-screen"}>

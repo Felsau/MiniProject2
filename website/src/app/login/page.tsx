@@ -27,7 +27,17 @@ export default function LoginPage() {
         setError("ชื่อผู้ใช้ หรือ รหัสผ่านไม่ถูกต้อง")
         setLoading(false)
       } else {
-        router.push("/dashboard") 
+        // ดึง session เพื่อเช็ค role
+        const sessionRes = await fetch("/api/auth/session")
+        const session = await sessionRes.json()
+        const userRole = session?.user?.role
+        
+        // Redirect ตาม role
+        if (userRole === "USER") {
+          router.push("/jobs")
+        } else {
+          router.push("/dashboard")
+        }
         router.refresh()
       }
     } catch (err) {

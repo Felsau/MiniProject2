@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Users, LayoutDashboard, LogOut, Briefcase, Building2 } from "lucide-react";
+import { Home, LayoutDashboard, LogOut, Briefcase, Building2, Search, FileText, Bookmark, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 export default function Sidebar() {
@@ -24,40 +24,65 @@ export default function Sidebar() {
     return null;
   }
 
-  // เช็ค role ว่าเป็น HR หรือ ADMIN เท่านั้น
+  // ตรวจสอบ role
   const userRole = (session.user as any)?.role;
-  if (userRole !== "HR" && userRole !== "ADMIN") {
-    return null;
-  }
-
-  const menuItems = [
-    {
-      name: "Dashboard",
-      icon: LayoutDashboard,
-      href: "/dashboard",
-      description: "ภาพรวมระบบ"
-    },
-    {
-      name: "จัดการตำแหน่งงาน",
-      icon: Briefcase,
-      href: "/recruitment",
-      description: "ระบบสรรหา"
-    },
-    {
-      name: "โปรไฟล์",
-      icon: Home,
-      href: "/profile",
-      description: "ข้อมูลส่วนตัว"
-    },
-  ];
+  
+  // กำหนด menu ตาม role
+  const menuItems = userRole === "USER" 
+    ? [
+        {
+          name: "ค้นหางาน",
+          icon: Search,
+          href: "/jobs",
+          description: "ค้นหาตำแหน่งงาน"
+        },
+        {
+          name: "งานที่สมัครไปแล้ว",
+          icon: FileText,
+          href: "/applications",
+          description: "ติดตามสถานะ"
+        },
+        {
+          name: "งานที่เล็งไว้",
+          icon: Bookmark,
+          href: "/bookmarks",
+          description: "งานที่บันทึกไว้"
+        },
+        {
+          name: "ข้อมูลส่วนตัว",
+          icon: User,
+          href: "/profile",
+          description: "จัดการโปรไฟล์"
+        },
+      ]
+    : [
+        {
+          name: "Dashboard",
+          icon: LayoutDashboard,
+          href: "/dashboard",
+          description: "ภาพรวมระบบ"
+        },
+        {
+          name: "จัดการตำแหน่งงาน",
+          icon: Briefcase,
+          href: "/recruitment",
+          description: "ระบบสรรหา"
+        },
+        {
+          name: "โปรไฟล์",
+          icon: Home,
+          href: "/profile",
+          description: "ข้อมูลส่วนตัว"
+        },
+      ];
 
   return (
     <div className="fixed left-0 top-0 w-72 h-screen bg-white shadow-2xl flex flex-col overflow-y-auto z-40">
       {/* Decorative Background */}
-      <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 opacity-10"></div>
+      <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 opacity-10 pointer-events-none"></div>
       
       {/* Header with Logo */}
-      <div className="relative p-6 border-b border-gray-100">
+      <div className="relative p-6 border-b border-gray-100 z-10">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
             <Building2 size={24} className="text-white" />
@@ -72,7 +97,7 @@ export default function Sidebar() {
       </div>
 
       {/* Menu */}
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-4 relative z-10">
         <ul className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -82,8 +107,9 @@ export default function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={false}
                   className={`
-                    group flex items-start gap-4 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200
+                    group flex items-start gap-4 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer relative z-10
                     ${
                       isActive
                         ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30"
