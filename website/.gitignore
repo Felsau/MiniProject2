@@ -40,6 +40,9 @@ yarn-error.log*
 # Prisma
 prisma/Database.db
 prisma/Database.db-journal
+prisma/dev.db
+prisma/dev.db-journal
+prisma/*.sqbpro
 
 # vercel
 .vercel

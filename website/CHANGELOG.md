@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-02-06
+
+### ✨ Added
+- 📧 **Email Notifications** — ส่ง email อัตโนมัติด้วย Nodemailer
+  - ส่งยืนยันเมื่อ User สมัครงาน
+  - แจ้ง HR/Admin เมื่อมีใบสมัครใหม่
+  - แจ้งผลการพิจารณา (ACCEPTED / REJECTED) ให้ผู้สมัคร
+- 📄 **Pagination สำหรับ User** — หน้าค้นหางาน `/jobs` แบ่งหน้า 6 รายการ/หน้า
+  - ปุ่มเลขหน้าแบบย่อ (1 … 4 5 6 … 10)
+  - แสดงจำนวนผลลัพธ์และหน้าปัจจุบัน
+  - รองรับ filter + pagination ร่วมกัน
+
+### 🔧 Fixed
+- แก้ Turbopack root config สำหรับ monorepo workspace
+
+### 🧹 Removed
+- ลบ documentation เก่าที่ไม่จำเป็น (DETAILED_REFACTORING_GUIDE, REFACTORING_SUMMARY, FILE_RESPONSIBILITIES, STRUCTURE, CONTRIBUTING, FILTER_SYSTEM)
+- ลบไฟล์ default SVG ของ Next.js ที่ไม่ได้ใช้
+- ลบไฟล์ database ซ้ำซ้อน (dev.db, Database.sqbpro)
+
+---
+
+## [1.1.0] - 2026-02-02
+
+### ✨ Added
+- ระบบใบสมัครงาน (Application System)
+  - User สมัครงานได้
+  - HR/Admin ตรวจสอบ/อนุมัติ/ปฏิเสธใบสมัคร
+  - ป้องกันสมัครซ้ำ (@@unique)
+- Job Filter & Search System
+  - ค้นหาตามคำค้น, แผนก, สถานที่, ประเภทงาน, เงินเดือน
+  - Filter Component พร้อม UI
+- Kill/Restore Job (Soft Delete)
+- Pagination สำหรับ API `/api/job`
+
+---
+
 ## [1.0.0] - 2026-01-30
 
 ### ✨ Added
@@ -14,147 +51,39 @@ All notable changes to this project will be documented in this file.
 - Responsive navigation (Navbar + Sidebar)
 - Database schema with Prisma ORM
 - Sample data seeding script
-- Comprehensive README documentation
-- Project structure documentation (STRUCTURE.md)
-- Environment variables template (.env.example)
-- Custom npm scripts for database operations
-
-### 🗃️ Database
-- User model with authentication and profile fields
-- Job model with full CRUD operations
-- Legacy models (departments, job_position) for compatibility
-- Cascading delete for job-author relationships
-- Automatic timestamps (createdAt, updatedAt)
-
-### 🎨 UI/UX
-- Clean, modern interface with Tailwind CSS
-- Responsive design for mobile and desktop
-- Job grid layout with cards
-- Modal-based job creation
-- Form validation
-- Loading states
-- Error handling
-
-### 🔐 Security
-- Password hashing with bcrypt (10 rounds)
-- Session-based authentication
-- Protected routes with middleware
-- Role-based authorization
-- Environment variable management
-- Secure API endpoints
-
-### 📦 Dependencies
-- Next.js 16.1.4 (App Router)
-- React 19.2.3
-- Prisma 5.22.0
-- NextAuth.js 4.24.13
-- TypeScript 5.x
-- Tailwind CSS 4.x
-- bcrypt 6.0.0
-
-### 🛠️ Developer Experience
-- TypeScript for type safety
-- ESLint for code quality
-- Prisma Studio for database management
-- Hot reload in development
-- Custom npm scripts for common tasks
-- Comprehensive code comments
-
-### 📖 Documentation
-- Complete README with setup instructions
-- Test account credentials documented
-- Project structure documentation
-- Environment variables explained
-- Contributing guidelines
-- Security best practices
 
 ### 🧪 Test Data
-Created 4 test users:
-- `admin` (ADMIN role) - Full system access
-- `hr` (HR role) - Can manage jobs
-- `john.dev` (USER role) - Regular user
-- `jane.design` (USER role) - Regular user
+| Username | Role | Description |
+|----------|------|-------------|
+| `admin` | ADMIN | Full system access |
+| `hr` | HR | Can manage jobs |
+| `john.dev` | USER | Regular user |
+| `jane.design` | USER | Regular user |
 
-All test accounts use password: `123456`
-
-Created 8 sample job postings across different departments:
-- IT Development (3 positions)
-- IT Infrastructure (1 position)
-- Marketing (1 position)
-- Human Resources (1 position)
-- Sales (1 position)
-- Design (1 position)
-
-### 🔧 Configuration
-- SQLite database for simplicity
-- File-based database storage
-- Development-optimized settings
-- Production-ready structure
-
-### 🐛 Bug Fixes
-- Resolved merge conflicts in prisma.ts
-- Fixed Prisma client import issues across all files
-- Updated schema to remove conflicts
-- Fixed database migration issues
-- Corrected environment variable configuration
-
-### 📝 Code Quality
-- Consistent code formatting
-- Proper TypeScript types throughout
-- Error handling in all API routes
-- Validation on forms
-- Clean component architecture
+Password ทุก account: `123456`
 
 ---
 
-## How to Update This Changelog
+## TODO / Future Plans
 
-When making changes, add them under the appropriate section:
-- **Added**: New features
-- **Changed**: Changes to existing functionality
-- **Deprecated**: Soon-to-be removed features
-- **Removed**: Removed features
-- **Fixed**: Bug fixes
-- **Security**: Security improvements
+### Phase 1 (MVP Essentials)
+- [ ] ระบบ Bookmark/Save Jobs
+- [ ] ระบบ Resume Upload
+- [ ] Email Verification สำหรับ register
+- [ ] ระบบ Password Reset
+- [ ] ดูรายชื่อผู้สมัครแต่ละตำแหน่ง (HR)
 
-Format: `- Brief description of change`
+### Phase 2 (Enhancement)
+- [ ] Rating/Notes สำหรับผู้สมัคร (HR)
+- [ ] Analytics Dashboard (HR)
+- [ ] Job Categories / Tags
+- [ ] Dark Mode
 
----
-
-## Future Plans
-
-### Upcoming Features
-- [ ] Email verification for new users
-- [ ] Password reset functionality
-- [ ] Advanced job search and filters
-- [ ] Job application system
-- [ ] Resume upload functionality
-- [ ] Admin panel for user management
-- [ ] Job analytics dashboard
-- [ ] Email notifications
-- [ ] Social media integration
-- [ ] Export job listings to PDF
-
-### Improvements
-- [ ] Add unit tests
-- [ ] Add integration tests
-- [ ] Improve mobile responsiveness
-- [ ] Add loading skeletons
-- [ ] Implement pagination for job listings
-- [ ] Add job categories/tags
-- [ ] Improve error messages
-- [ ] Add success notifications
-- [ ] Implement real-time updates
-
-### Technical Debt
-- [ ] Migrate to PostgreSQL for production
-- [ ] Add Redis for session storage
-- [ ] Implement rate limiting
-- [ ] Add API documentation (Swagger)
-- [ ] Set up CI/CD pipeline
-- [ ] Add monitoring and logging
-- [ ] Optimize bundle size
-- [ ] Add performance metrics
+### Phase 3 (Advanced)
+- [ ] Messaging System
+- [ ] Real-time Notifications (WebSocket)
+- [ ] Bulk Actions (อนุมัติ/ปฏิเสธหลายรายการ)
+- [ ] Candidate Pipeline (Kanban board)
 
 ---
 
