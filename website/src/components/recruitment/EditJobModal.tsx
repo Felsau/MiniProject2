@@ -73,7 +73,7 @@ export function EditJobModal({
       alert("บันทึกข้อมูลเรียบร้อยแล้ว"); // (Optional) แจ้งเตือนหน่อยก็ดี
       onClose(); // ปิด Modal
       router.refresh(); // รีเฟรชหน้า
-    } catch (error) {
+    } catch {
       // ถ้า Error มันจะเด้งมาตรงนี้
       alert("เกิดข้อผิดพลาดในการบันทึก กรุณาลองใหม่");
     }
@@ -98,7 +98,7 @@ export function EditJobModal({
           {/* ส่ง handleChange ไปให้ FormFields ใช้ */}
           <JobFormFields 
             formData={formData} 
-            onFieldChange={(field, value) => handleChange(field as any, value)}
+            onFieldChange={(field, value) => handleChange(field as keyof import("@/hooks/useJobForm").JobFormData, value)}
           />
 
           <div className="flex gap-3 pt-4">

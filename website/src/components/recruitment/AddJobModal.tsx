@@ -9,7 +9,7 @@ import { JobFormFields } from "./JobFormFields";
 export default function AddJobModal() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { formData, updateField, resetForm } = useJobForm();
+  const { formData, handleChange, resetForm } = useJobForm();
   const { loading, submitJob } = useJobApi();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,7 +53,7 @@ export default function AddJobModal() {
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <JobFormFields 
                 formData={formData} 
-                onFieldChange={updateField}
+                onFieldChange={handleChange}
               />
 
               <div className="flex gap-3 pt-4">

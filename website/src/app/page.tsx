@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Building2, Lock, User, ArrowRight } from "lucide-react";
 
@@ -40,7 +40,7 @@ export default function Home() {
         }
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError("เกิดข้อผิดพลาด กรุณาลองใหม่");
       setLoading(false);
     }

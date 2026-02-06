@@ -1,37 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Briefcase, Search, Filter, Eye, EyeOff } from "lucide-react"; // ✅ เพิ่ม icon
+import { Briefcase, Search, Eye, EyeOff } from "lucide-react"; // ✅ เพิ่ม icon
 import {EditJobModal} from "./EditJobModal";
 import { useRouter } from "next/navigation";
 import { useJobActions } from "@/hooks/useJobActions";
 import { JobCard } from "./JobCard";
-import { JobWithCount } from "@/types"; // ✅ แนะนำให้ใช้ Type กลาง (ถ้ามี) หรือใช้ Interface เดิมก็ได้
-
-// ถ้ายังไม่ได้สร้างไฟล์ types/index.ts ให้ใช้ Interface นี้แทนชั่วคราว
-interface Job {
-  id: string;
-  title: string;
-  description: string | null;
-  department: string | null;
-  location: string | null;
-  salary: string | null;
-  employmentType: string;
-  requirements: string | null;
-  responsibilities: string | null;
-  benefits: string | null;
-  createdAt: Date;
-  isActive: boolean;
-  killedAt: Date | null;
-  postedByUser: {
-    fullName: string | null;
-    username: string;
-  } | null;
-  _count?: { applications: number }; // รองรับ count
-}
+import { JobWithCount } from "@/types";
 
 interface JobListProps {
-  jobs: Job[]; // หรือ JobWithCount[]
+  jobs: JobWithCount[];
   userRole?: string;
 }
 
@@ -42,12 +20,12 @@ export function JobList({ jobs, userRole }: JobListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showInactive, setShowInactive] = useState(false); // ควบคุมการเปิด/ปิดงานที่นี่เลย
 
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [selectedJob, setSelectedJob] = useState<JobWithCount | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { loadingJobId, handleKillJob, handleRestoreJob, handleDeleteJob } = useJobActions();
+  const { handleKillJob, handleRestoreJob, handleDeleteJob } = useJobActions();
 
-  const handleEdit = (job: Job) => {
+  const handleEdit = (job: JobWithCount) => {
     setSelectedJob(job);
     setIsEditModalOpen(true);
   };
@@ -130,9 +108,8 @@ export function JobList({ jobs, userRole }: JobListProps) {
           {filteredJobs.map((job) => (
             <JobCard
               key={job.id}
-              job={job as any} // Cast as any ถ้า Type ยังไม่ตรงกันเป๊ะ
+              job={job}
               userRole={userRole}
-              loadingJobId={loadingJobId}
               onEdit={handleEdit}
               onKill={(jobId) => handleJobAction(handleKillJob, jobId)}
               onRestore={(jobId) => handleJobAction(handleRestoreJob, jobId)}
@@ -149,7 +126,7 @@ export function JobList({ jobs, userRole }: JobListProps) {
             setIsEditModalOpen(false);
             setSelectedJob(null);
           }}
-          job={selectedJob as any}
+          job={selectedJob as JobWithCount}
         />
       )}
     </>

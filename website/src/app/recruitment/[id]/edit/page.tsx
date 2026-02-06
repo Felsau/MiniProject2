@@ -41,27 +41,27 @@ export default function EditJobPage() {
 
   useEffect(() => {
     if (jobId) {
+      const fetchJob = async () => {
+        try {
+          const res = await fetch(`/api/job/${jobId}`);
+          if (res.ok) {
+            const data = await res.json();
+            setFormData(data.job);
+          } else {
+            alert("ไม่สามารถโหลดข้อมูลงาน");
+            router.back();
+          }
+        } catch (error) {
+          console.error("Error fetching job:", error);
+          alert("เกิดข้อผิดพลาด");
+        } finally {
+          setFetching(false);
+        }
+      };
+
       fetchJob();
     }
-  }, [jobId]);
-
-  const fetchJob = async () => {
-    try {
-      const res = await fetch(`/api/job/${jobId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setFormData(data.job);
-      } else {
-        alert("ไม่สามารถโหลดข้อมูลงาน");
-        router.back();
-      }
-    } catch (error) {
-      console.error("Error fetching job:", error);
-      alert("เกิดข้อผิดพลาด");
-    } finally {
-      setFetching(false);
-    }
-  };
+  }, [jobId, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>

@@ -20,7 +20,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' }
     });
     return NextResponse.json(applications);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Fetch error" }, { status: 500 });
   }
 }
@@ -66,9 +66,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     // ถ้าพลาดจากระดับ Database (เช่นกดพร้อมกัน 2 ครั้งจริงๆ) ให้ดัก Error ตรงนี้
-    if (error.code === 'P2002') {
+    if (error instanceof Error && "code" in error && (error as { code: string }).code === 'P2002') {
       return NextResponse.json({ error: "คุณสมัครงานนี้ไปแล้ว (Database Error)" }, { status: 400 });
     }
     console.error("Apply Error:", error);

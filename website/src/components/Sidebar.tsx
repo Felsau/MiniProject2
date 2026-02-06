@@ -25,8 +25,8 @@ export default function Sidebar() {
     return null;
   }
 
-  const userRole = (session.user as any)?.role;
-  const menuItems = getSidebarMenuItems(userRole);
+  const userRole = (session.user as { role?: string })?.role;
+  const menuItems = getSidebarMenuItems(userRole ?? "");
 
   return (
     <div className="fixed left-0 top-0 w-72 h-screen bg-white shadow-2xl flex flex-col overflow-y-auto z-40">

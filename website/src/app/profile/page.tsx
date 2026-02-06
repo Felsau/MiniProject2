@@ -150,7 +150,7 @@ export default async function ProfilePage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      {user.jobs.map((job: any) => (
+                      {user.jobs.map((job) => (
                         <div key={job.id} className="group card-hover flex justify-between items-start p-5 rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:border-blue-300 hover:shadow-lg transition-all cursor-pointer">
                           <div className="flex-1">
                             <h4 className="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition mb-2">

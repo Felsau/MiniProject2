@@ -14,7 +14,7 @@ export default function LayoutWrapper({ children }: { children: ReactNode }) {
   }
 
   // ตรวจสอบว่ามี session และมี role ที่ถูกต้อง
-  const userRole = (session?.user as any)?.role;
+  const userRole = (session?.user as { role?: string })?.role;
   const showSidebar = status !== "loading" && session && (userRole === "HR" || userRole === "ADMIN" || userRole === "USER");
 
   return (

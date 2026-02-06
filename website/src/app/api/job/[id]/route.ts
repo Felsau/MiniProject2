@@ -63,7 +63,7 @@ export async function PATCH(
     const isStatusAction = body.action === "kill" || body.action === "restore";
 
     // เตรียมข้อมูลที่จะอัปเดต (Update Data)
-    let updateData: any = {};
+    let updateData: Record<string, unknown> = {};
 
     if (isStatusAction) {
       // 👉 กรณี 1: สั่งปิด/เปิดงาน

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, MapPin, Briefcase, DollarSign, Trash2 } from "lucide-react";
+import { Bookmark } from "lucide-react";
 
 export default function BookmarksPage() {
   return (

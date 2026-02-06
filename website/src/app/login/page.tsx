@@ -40,7 +40,7 @@ export default function LoginPage() {
         }
         router.refresh()
       }
-    } catch (err) {
+    } catch {
       setError("เกิดข้อผิดพลาด กรุณาลองใหม่")
       setLoading(false)
     }

@@ -10,7 +10,10 @@ export default async function DashboardPage() {
     redirect("/");
   }
 
-  const userRole = (session.user as any)?.role;
+  const userRole = (session.user as { role?: string })?.role;
+
+  // Prevent unused variable warning — userRole may be used for role-based rendering
+  void userRole;
 
   return (
     <div className="min-h-screen p-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">

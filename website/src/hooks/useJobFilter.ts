@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import type { JobFilterCriteria } from "@/lib/jobService";
+import type { JobWithCount } from "@/types";
 
 /**
  * Hook for managing job filters
@@ -17,7 +18,7 @@ export function useJobFilter() {
     isActive: true,
   });
 
-  const updateFilter = useCallback((field: keyof JobFilterCriteria, value: any) => {
+  const updateFilter = useCallback((field: keyof JobFilterCriteria, value: string | number | boolean | undefined) => {
     setFilters((prev) => ({
       ...prev,
       [field]: value,
@@ -68,7 +69,7 @@ export function useJobFilter() {
  * Hook for fetching filtered jobs
  */
 export function useFilteredJobs() {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<JobWithCount[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

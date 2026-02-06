@@ -77,7 +77,7 @@ export interface JobFilterCriteria {
  */
 export async function searchAndFilterJobs(criteria: JobFilterCriteria): Promise<JobWithCount[]> {
   try {
-    const where: any = {};
+    const where: Record<string, unknown> = {};
 
     if (criteria.searchKeyword) {
       where.OR = [

@@ -1,4 +1,4 @@
-import { Job, Application } from "@prisma/client";
+import type { Job } from "@prisma/client";
 
 // สร้าง Type กลางสำหรับ Job ที่มีข้อมูล User และจำนวนผู้สมัครติดมาด้วย
 export interface JobWithCount extends Job {

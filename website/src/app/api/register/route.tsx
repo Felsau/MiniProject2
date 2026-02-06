@@ -11,7 +11,6 @@ export async function POST(req: Request) {
     const session = await getServerSession(authOptions)
 
     // เช็คว่ามี Session และเป็น ADMIN จริงไหม
-    // @ts-ignore
     if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "สิทธิ์ไม่เพียงพอ" }, { status: 403 })
     }
@@ -26,7 +25,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "สำเร็จ" }, { status: 201 })
 
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "เกิดข้อผิดพลาดในการสร้างบัญชี" }, { status: 500 })
   }
 }

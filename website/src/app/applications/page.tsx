@@ -4,8 +4,20 @@ import { useEffect, useState } from "react";
 import { FileText, Calendar, Clock, CheckCircle, XCircle, MapPin, Briefcase, Loader2 } from "lucide-react";
 import Link from "next/link";
 
+interface ApplicationJob {
+  title: string;
+  location: string;
+}
+
+interface Application {
+  id: string;
+  status: string;
+  createdAt: string;
+  job: ApplicationJob;
+}
+
 export default function ApplicationsPage() {
-  const [applications, setApplications] = useState([]);
+  const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
 
   // 1. ดึงข้อมูลจาก API
@@ -32,9 +44,9 @@ export default function ApplicationsPage() {
   const stats = {
     total: applications.length,
     // ใช้ .toUpperCase() เพื่อให้ไม่ว่าใน DB จะเป็นตัวเล็กหรือใหญ่ ก็คำนวณถูกเสมอ
-    pending: applications.filter((app: any) => app.status?.toUpperCase() === "PENDING").length,
-    accepted: applications.filter((app: any) => app.status?.toUpperCase() === "ACCEPTED").length,
-    rejected: applications.filter((app: any) => app.status?.toUpperCase() === "REJECTED").length,
+    pending: applications.filter((app) => app.status?.toUpperCase() === "PENDING").length,
+    accepted: applications.filter((app) => app.status?.toUpperCase() === "ACCEPTED").length,
+    rejected: applications.filter((app) => app.status?.toUpperCase() === "REJECTED").length,
   };
 
   // 3. ฟังก์ชันช่วยเลือกสีและข้อความสถานะ
@@ -91,7 +103,7 @@ export default function ApplicationsPage() {
           ) : (
             /* ข้อมูลตารางการสมัคร */
             <div className="divide-y divide-gray-100">
-              {applications.map((app: any) => {
+              {applications.map((app) => {
                 const status = getStatusDetails(app.status);
                 return (
                   <div key={app.id} className="p-6 hover:bg-gray-50 transition flex flex-col md:flex-row md:items-center justify-between gap-4">

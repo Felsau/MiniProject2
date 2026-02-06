@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Briefcase } from "lucide-react";
 import { JobFilterComponent } from "@/components/recruitment/JobFilterComponent";
-import { useJobFilter, useFilteredJobs } from "@/hooks/useJobFilter";
+import { useFilteredJobs } from "@/hooks/useJobFilter";
 import type { JobFilterCriteria } from "@/lib/jobService";
 import { JobCard } from "@/components/recruitment/JobCard"; // ✅ เรียกใช้ JobCard ที่เราทำไว้
 
@@ -62,9 +62,10 @@ export default function JobsPage() {
       if (!res.ok) throw new Error(data.error || "สมัครไม่สำเร็จ");
 
       alert(`🎉 สมัครงาน "${jobTitle}" สำเร็จเรียบร้อย!`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("❌ " + error.message);
+      const message = error instanceof Error ? error.message : "สมัครไม่สำเร็จ";
+      alert("❌ " + message);
     } finally {
       setApplyingJobId(null);
     }

@@ -27,7 +27,7 @@ export function JobFilterComponent({ onFilterChange, options }: JobFilterCompone
     onFilterChange({ ...filters, searchKeyword: keyword });
   };
 
-  const handleFilterChange = (field: keyof JobFilterCriteria, value: any) => {
+  const handleFilterChange = (field: keyof JobFilterCriteria, value: string | number | boolean | undefined) => {
     updateFilter(field, value);
     onFilterChange({ ...filters, [field]: value });
   };
