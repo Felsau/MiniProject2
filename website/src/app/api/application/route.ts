@@ -8,7 +8,7 @@ import {
   sendApplicationStatusUpdateEmail,
 } from "@/lib/email";
 
-// GET: ดึงรายการงานที่สมัคร (USER ดูของตัวเอง / ADMIN-HR ดูทั้งหมด)
+// GET: ดึงรายการงานที่สมัคร
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -44,7 +44,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { jobId } = body;
 
-    // 1. ตรวจสอบว่าส่ง jobId มาจริงไหม
     if (!jobId) return NextResponse.json({ error: "Missing jobId" }, { status: 400 });
 
     const user = await prisma.user.findUnique({
@@ -53,7 +52,6 @@ export async function POST(req: Request) {
 
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    // 2. เช็คซ้ำอีกรอบด้วย findUnique (ถ้าตั้ง @@unique ไว้ใน schema จะใช้ findUnique ได้แม่นกว่า)
     const existing = await prisma.application.findFirst({
       where: {
         jobId: jobId,
@@ -65,7 +63,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "คุณเคยสมัครตำแหน่งนี้ไปแล้ว" }, { status: 400 });
     }
 
-    // 3. บันทึกข้อมูล
     const application = await prisma.application.create({
       data: {
         jobId: jobId,
@@ -79,7 +76,7 @@ export async function POST(req: Request) {
       },
     });
 
-    // 4. ส่ง Email แจ้งเตือน (ทำงาน async ไม่ block response)
+    // Email Notification Logic
     const emailData = {
       applicantName: user.fullName || user.username,
       applicantEmail: user.email || "",
@@ -88,12 +85,10 @@ export async function POST(req: Request) {
       jobLocation: application.job.location,
     };
 
-    // 4.1 ส่ง email ยืนยันให้ผู้สมัคร
     sendApplicationConfirmationEmail(emailData).catch((err) =>
       console.error("❌ Failed to send confirmation email:", err)
     );
 
-    // 4.2 ส่ง email แจ้ง HR/Admin
     prisma.user
       .findMany({
         where: { role: { in: ["ADMIN", "HR"] }, email: { not: null } },
@@ -114,8 +109,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true }, { status: 201 });
 
   } catch (error: unknown) {
-    // ถ้าพลาดจากระดับ Database (เช่นกดพร้อมกัน 2 ครั้งจริงๆ) ให้ดัก Error ตรงนี้
-    if (error instanceof Error && "code" in error && (error as { code: string }).code === 'P2002') {
+    if (error instanceof Error && "code" in error && (error as any).code === 'P2002') {
       return NextResponse.json({ error: "คุณสมัครงานนี้ไปแล้ว (Database Error)" }, { status: 400 });
     }
     console.error("Apply Error:", error);
@@ -132,7 +126,6 @@ export async function PATCH(req: Request) {
     const user = await prisma.user.findUnique({ where: { username: session.user.name } });
     if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    // ตรวจสอบสิทธิ์
     if (user.role !== "ADMIN" && user.role !== "HR") {
       return NextResponse.json({ error: "สิทธิ์ไม่เพียงพอ" }, { status: 403 });
     }
@@ -143,8 +136,11 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "กรุณาระบุ applicationId และ status" }, { status: 400 });
     }
 
-    if (!["PENDING", "ACCEPTED", "REJECTED"].includes(status)) {
-      return NextResponse.json({ error: "สถานะไม่ถูกต้อง" }, { status: 400 });
+    // ✅✅✅ จุดที่แก้ไข: เพิ่มสถานะใหม่ (INTERVIEW, HIRED, OFFER) เข้าไปใน List
+    const validStatuses = ["PENDING", "ACCEPTED", "REJECTED", "INTERVIEW", "HIRED", "OFFER"];
+
+    if (!validStatuses.includes(status)) {
+      return NextResponse.json({ error: `สถานะไม่ถูกต้อง (${status})` }, { status: 400 });
     }
 
     const updated = await prisma.application.update({
@@ -160,7 +156,8 @@ export async function PATCH(req: Request) {
       },
     });
 
-    // ส่ง Email แจ้งผลการพิจารณา (เฉพาะ ACCEPTED / REJECTED)
+    // ส่วนส่ง Email (ส่งเฉพาะ Accepted/Rejected ตาม Logic เดิม)
+    // หมายเหตุ: หากต้องการให้ส่งเมลตอนนัดสัมภาษณ์ด้วย ต้องแก้ฟังก์ชัน sendApplicationStatusUpdateEmail เพิ่มเติม
     if (
       (status === "ACCEPTED" || status === "REJECTED") &&
       updated.user?.email
