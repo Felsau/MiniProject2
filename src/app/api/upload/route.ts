@@ -11,7 +11,9 @@ const ALLOWED_TYPES = ["application/pdf"];
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
+    console.log("[UPLOAD] session:", session);
     if (!session?.user?.name) {
+      console.log("[UPLOAD] Unauthorized: no session");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -19,10 +21,12 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File | null;
 
     if (!file) {
+      console.log("[UPLOAD] ไม่พบไฟล์ที่อัปโหลด");
       return NextResponse.json({ error: "ไม่พบไฟล์ที่อัปโหลด" }, { status: 400 });
     }
 
     if (!ALLOWED_TYPES.includes(file.type)) {
+      console.log("[UPLOAD] ไฟล์ไม่ใช่ PDF", file.type);
       return NextResponse.json(
         { error: "รองรับเฉพาะไฟล์ PDF เท่านั้น" },
         { status: 400 }
@@ -30,6 +34,7 @@ export async function POST(req: Request) {
     }
 
     if (file.size > MAX_FILE_SIZE) {
+      console.log("[UPLOAD] ไฟล์ใหญ่เกินไป", file.size);
       return NextResponse.json(
         { error: "ไฟล์มีขนาดใหญ่เกินไป (สูงสุด 5MB)" },
         { status: 400 }
@@ -48,13 +53,13 @@ export async function POST(req: Request) {
     await fs.writeFile(filePath, buffer);
 
     const fileUrl = `/uploads/resumes/${fileName}`;
-
+    console.log("[UPLOAD] Success:", fileUrl);
     return NextResponse.json(
       { success: true, url: fileUrl, fileName },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Upload Error:", error);
+    console.error("[UPLOAD] Upload Error:", error);
     return NextResponse.json(
       { error: "เกิดข้อผิดพลาดในการอัปโหลดไฟล์" },
       { status: 500 }
