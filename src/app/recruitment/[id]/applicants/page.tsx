@@ -166,7 +166,7 @@ export default function ApplicantsPage({ params }: { params: Promise<{ id: strin
 
                                                         {/* ปุ่มดูเรซูเม่ (FileText) */}
                                                         {app.resumeUrl ? (
-                                                            <Link
+                                                            <a
                                                                 href={app.resumeUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
@@ -174,7 +174,7 @@ export default function ApplicantsPage({ params }: { params: Promise<{ id: strin
                                                                 title="เปิดไฟล์เรซูเม่"
                                                             >
                                                                 <FileText size={18} />
-                                                            </Link>
+                                                            </a>
                                                         ) : (
                                                             <div className="p-1.5 text-gray-200 cursor-not-allowed" title="ไม่แนบเรซูเม่">
                                                                 <FileText size={18} />

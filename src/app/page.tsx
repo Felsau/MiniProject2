@@ -84,7 +84,7 @@ export default function Home() {
                   type="text" 
                   required
                   className="w-full border-2 border-gray-200 rounded-xl pl-11 pr-4 py-3.5 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-gray-900 font-medium"
-                  placeholder="admin / hr / john.dev"
+                  placeholder="ชื่อผู้ใช้ของคุณ"
                   onChange={(e) => setData({ ...data, username: e.target.value })}
                 />
               </div>
@@ -126,23 +126,10 @@ export default function Home() {
           </form>
 
           <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-center text-sm text-gray-600 mb-3">
-              🔑 ข้อมูลทดสอบ (Test Accounts)
+            <p className="text-center text-sm text-gray-600">
+              หากยังไม่มีบัญชี โปรดติดต่อผู้ดูแลระบบ หรือ
+              <a href="/register" className="text-blue-600 font-medium ml-1">สมัครสมาชิก</a>
             </p>
-            <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl p-4 space-y-2 text-xs">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Admin:</span>
-                <span className="font-mono font-bold text-gray-800">admin / 123456</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">HR:</span>
-                <span className="font-mono font-bold text-gray-800">hr / 123456</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">User:</span>
-                <span className="font-mono font-bold text-gray-800">john.dev / 123456</span>
-              </div>
-            </div>
           </div>
 
         </div>

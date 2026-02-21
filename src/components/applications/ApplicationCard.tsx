@@ -95,7 +95,6 @@ export function ApplicationCard({ app, isAdminOrHR, updatingId, onUpdateStatus }
               href={app.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              download
               className="inline-flex items-center gap-1.5 mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium transition"
             >
               <Download size={14} />
