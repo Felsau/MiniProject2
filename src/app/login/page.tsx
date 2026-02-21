@@ -67,8 +67,8 @@ export default function LoginPage() {
             <input 
               type="text" 
               required
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 transition text-gray-900"
-              placeholder="admin / hr / employee"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-indigo-500 transition text-gray-900"
+              placeholder="ชื่อผู้ใช้ของคุณ"
               onChange={(e) => setData({ ...data, username: e.target.value })}
             />
           </div>

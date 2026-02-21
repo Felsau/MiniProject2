@@ -8,7 +8,7 @@ export function baseTemplate(content: string): string {
 </head>
 <body style="margin:0; padding:0; background-color:#f3f4f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <div style="max-width:600px; margin:0 auto; padding:20px;">
-    <div style="background: linear-gradient(135deg, #2563eb, #4f46e5); padding:30px; border-radius:16px 16px 0 0; text-align:center;">
+  <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); padding:30px; border-radius:16px 16px 0 0; text-align:center;">
       <h1 style="color:white; margin:0; font-size:24px;">💼 Job Recruitment System</h1>
     </div>
     <div style="background:white; padding:30px; border-radius:0 0 16px 16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
@@ -117,8 +117,8 @@ export function newApplicationNotifyHRHtml(
     </div>
 
     <div style="text-align:center; margin:24px 0;">
-      <a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/applications" 
-         style="display:inline-block; background:linear-gradient(135deg, #2563eb, #4f46e5); color:white; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;">
+  <a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/applications" 
+     style="display:inline-block; background:linear-gradient(135deg, #1e40af, #3b82f6); color:white; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;">
         📋 ดูใบสมัครในระบบ
       </a>
     </div>
@@ -198,7 +198,7 @@ export function statusUpdateHtml(
     </div>` : `
     <div style="text-align:center; margin:24px 0;">
       <a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/jobs" 
-         style="display:inline-block; background:linear-gradient(135deg, #2563eb, #4f46e5); color:white; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;">
+         style="display:inline-block; background:linear-gradient(135deg, #1e40af, #3b82f6); color:white; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px;">
         🔍 ค้นหาตำแหน่งอื่นๆ
       </a>
     </div>`}
